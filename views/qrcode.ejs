@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>LeanEngine</title>
+    <script src="/js/jquery-1.12.0.min.js"></script>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <script src="https://cdn.wilddog.com/js/client/current/wilddog.js"></script>
+</head>
+<body>
+<h1>QrCode</h1>
+
+<p>这是 QrCode 的示例应用</p>
+
+<p>UUID:<%= uuid %></p>
+
+<img src="<%= src %>">
+
+<br>
+
+<textarea style="resize: none;" cols="30" rows="6"></textarea>
+<button>发送</button>
+</body>
+<script type="text/javascript">
+    var ref_info = new Wilddog('https://inputmethod.wilddogio.com/' + '<%= uuid %>' + '/info');
+    var ref_send = new Wilddog('https://inputmethod.wilddogio.com/' + '<%= uuid %>' + '/send');
+    $(function () {
+        $('textarea').bind('input propertychange', function () {
+            ref_info.set($('textarea').val());
+        });
+        $('button').click(function () {
+            ref_send.set(true);
+            $('textarea').val('');
+            ref_info.set($('textarea').val());
+        });
+    });
+</script>
+</html>
